@@ -106,17 +106,33 @@ class cls_jxsg_MainSettingsPanel(bpy.types.Panel):
         row.column().label(text = "Seek index")
         row.column().prop(settings, "seek_index")
         
-        layout.row().label(text = "Starting position by axis")
         row = layout.row()
-        row.column().prop(settings, "starting_position_by_axis_x")
-        row.column().prop(settings, "starting_position_by_axis_y")
-        row.column().prop(settings, "starting_position_by_axis_z")
+        row.column().label(text = "Positioning method")
+        row.column().prop(settings, "positioning_method")
         
-        layout.row().label(text = "Offset on step by axis")
-        row = layout.row()
-        row.column().prop(settings, "offset_on_step_by_axis_x")
-        row.column().prop(settings, "offset_on_step_by_axis_y")
-        row.column().prop(settings, "offset_on_step_by_axis_z")
+        if "Matrix" == settings.positioning_method:
+        
+            layout.row().label(text = "Starting position by axis")
+            row = layout.row()
+            row.column().prop(settings, "starting_position_by_axis_x")
+            row.column().prop(settings, "starting_position_by_axis_y")
+            row.column().prop(settings, "starting_position_by_axis_z")
+            
+            layout.row().label(text = "Offset on step by axis")
+            row = layout.row()
+            row.column().prop(settings, "offset_on_step_by_axis_x")
+            row.column().prop(settings, "offset_on_step_by_axis_y")
+            row.column().prop(settings, "offset_on_step_by_axis_z")
+        
+        if "Circle" == settings.positioning_method:
+            
+            row = layout.row()
+            row.column().label(text = "Position circle radius")
+            row.column().prop(settings, "position_circle_radius")
+            
+            row = layout.row()
+            row.column().label(text = "Corner step in degrees")
+            row.column().prop(settings, "corner_step_in_degrees")
         
         row = layout.row()
         row.scale_y = 2

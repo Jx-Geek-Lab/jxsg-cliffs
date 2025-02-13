@@ -30,8 +30,8 @@ class Mesh:
     def triangulate(self):
         bpy.ops.mesh.quads_convert_to_tris(quad_method='BEAUTY', ngon_method='BEAUTY')
     
-    def randomize(self):
-        bpy.ops.transform.vertex_random(offset=random.uniform(0.075, 0.25), seed=random.randint(0, 500))
+    def randomize(self, f, t, u=0, n=0):
+        bpy.ops.transform.vertex_random(offset=random.uniform(f, t), uniform=u, normal=n, seed=random.randint(1, 500))
     
     def select(self, e, f, t):
         self.to_edit_mode()

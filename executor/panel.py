@@ -16,6 +16,7 @@ class cls_jxsg_ExecutorPanel(bpy.types.Panel):
         settings = scene.jxsg_executor_settings
         
         layout.row().prop(settings, "cliff_base")
+        layout.row().column().prop(settings, "hard_randomize")
         layout.row().prop(settings, "cliff_height")
         layout.row().prop(settings, "base_radius")
         layout.row().prop(settings, "apex_radius")

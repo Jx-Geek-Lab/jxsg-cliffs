@@ -16,7 +16,7 @@ class Executor:
         object = utils.add_circle(utils.name(context, i), task.cliff_base, task.base_radius)
         utils.to_edit_mode()
         if task.hard_randomize:
-            utils.randomize(0.9, 1.35)
+            utils.randomize(0.1, 0.5)
         height = task.cliff_height
         if task.height_correction:
             height = height + ((task.height_correction * random.uniform(task.height_correction_randomize, 1)) * i)

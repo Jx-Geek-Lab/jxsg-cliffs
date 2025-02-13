@@ -4,6 +4,8 @@ from .executor.settings import cls_jxsg_ExecutorGroup
 from .executor.operator import cls_jxsg_ExecutorOperator
 from .executor.panel import cls_jxsg_ExecutorPanel
 
+from .executor.category import Category
+
 default_debug_mode = True
 default_name_template = "O_Mesh.*"
 default_number_of_generations = 5
@@ -75,7 +77,7 @@ class cls_jxsg_AddonGeneralPanel(bpy.types.Panel):
     bl_label = "JX Smart Generator"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    bl_category = "JXSG"
+    bl_category = Category
 
     def draw(self, context):
         pass

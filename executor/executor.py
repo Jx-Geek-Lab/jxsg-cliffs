@@ -8,7 +8,7 @@ class Executor:
     
     def do(self, context, i):
         scene = context.scene
-        task = scene.jxsg_cliffs_generator_settings
+        task = scene.jxsg_executor_settings
         
         utils.rnd()
         object = utils.add_circle(utils.name(context, i), task.cliff_base, task.base_radius)

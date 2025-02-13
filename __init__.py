@@ -1,22 +1,23 @@
 import bpy
 
-from .utils.utils import Utils
+from .executor.settings import cls_jxsg_ExecutorGroup
+from .executor.operator import cls_jxsg_ExecutorOperator
+from .executor.panel import cls_jxsg_ExecutorPanel
 
-utils = Utils()
-
-default_debug_mode=True
-default_name_template="O_Mesh.*"
-default_number_of_generations=5
-default_seek_index=0
-default_positioning_method="Matrix"
-default_starting_position_by_axis_x=0.0
-default_starting_position_by_axis_y=0.0
-default_starting_position_by_axis_z=0.0
-default_offset_on_step_by_axis_x=0.0
-default_offset_on_step_by_axis_y=5.0
-default_offset_on_step_by_axis_z=0.0
-default_position_circle_radius=5
-default_corner_step_in_degrees=45
+default_debug_mode = True
+default_name_template = "O_Mesh.*"
+default_number_of_generations = 5
+default_seek_index = 0
+default_positioning_method = "Matrix"
+default_starting_position_by_axis_x = 0.0
+default_starting_position_by_axis_y = 0.0
+default_starting_position_by_axis_z = 0.0
+default_offset_on_step_by_axis_x = 0.0
+default_offset_on_step_by_axis_y = 5.0
+default_offset_on_step_by_axis_z = 0.0
+default_position_circle_radius = 5.0
+default_corner_step_in_degrees = 45.0
+default_radius_compression = 0.0
 
 class cls_jxsg_MainSettingsGroup(bpy.types.PropertyGroup):
     debug_mode: bpy.props.BoolProperty(default=default_debug_mode, name=" Debug mode")
@@ -37,9 +38,10 @@ class cls_jxsg_MainSettingsGroup(bpy.types.PropertyGroup):
     offset_on_step_by_axis_x: bpy.props.FloatProperty(default=default_offset_on_step_by_axis_x, min=-10.0, max=10.0, name="X")
     offset_on_step_by_axis_y: bpy.props.FloatProperty(default=default_offset_on_step_by_axis_y, min=-10.0, max=10.0, name="Y")
     offset_on_step_by_axis_z: bpy.props.FloatProperty(default=default_offset_on_step_by_axis_z, min=-10.0, max=10.0, name="Z")
-    position_circle_radius: bpy.props.IntProperty(default=default_position_circle_radius, min=1, max=50, name="")
-    corner_step_in_degrees: bpy.props.IntProperty(default=default_corner_step_in_degrees, min=1, max=360, name="")
-    
+    position_circle_radius: bpy.props.FloatProperty(default=default_position_circle_radius, min=0.5, max=50.0, name="")
+    corner_step_in_degrees: bpy.props.FloatProperty(default=default_corner_step_in_degrees, min=1.0, max=360.0, name="")
+    radius_compression: bpy.props.FloatProperty(default=default_radius_compression, min=-25.0, max=25.0, name="")
+
 class cls_jxsg_MainSettingsOperator(bpy.types.Operator):
     
     bl_idname = "object.jxsg_main_settings_operator"
@@ -63,6 +65,7 @@ class cls_jxsg_MainSettingsOperator(bpy.types.Operator):
         settings.offset_on_step_by_axis_z=default_offset_on_step_by_axis_z
         settings.position_circle_radius=default_position_circle_radius
         settings.corner_step_in_degrees=default_corner_step_in_degrees
+        settings.radius_compression=default_radius_compression
         
         return {'FINISHED'}
 
@@ -133,6 +136,10 @@ class cls_jxsg_MainSettingsPanel(bpy.types.Panel):
             row = layout.row()
             row.column().label(text = "Corner step in degrees")
             row.column().prop(settings, "corner_step_in_degrees")
+            
+            row = layout.row()
+            row.column().label(text = "Radius compression")
+            row.column().prop(settings, "radius_compression")
         
         row = layout.row()
         row.scale_y = 2
@@ -140,9 +147,12 @@ class cls_jxsg_MainSettingsPanel(bpy.types.Panel):
 
 __classes = [
     cls_jxsg_MainSettingsGroup,
+    cls_jxsg_ExecutorGroup,
     cls_jxsg_MainSettingsOperator,
+    cls_jxsg_ExecutorOperator,
     cls_jxsg_AddonGeneralPanel,
     cls_jxsg_MainSettingsPanel,
+    cls_jxsg_ExecutorPanel,
 ]
 
 def register():
@@ -151,6 +161,7 @@ def register():
         bpy.utils.register_class(cls)
     
     bpy.types.Scene.jxsg_main_settings = bpy.props.PointerProperty(type=cls_jxsg_MainSettingsGroup)
+    bpy.types.Scene.jxsg_executor_settings = bpy.props.PointerProperty(type=cls_jxsg_ExecutorGroup)
 
 def unregister():
     

@@ -39,6 +39,8 @@ class Executor:
         utils.select(object.data.vertices, 0, task.cliff_base - 1)
         utils.scale_by_axis_z(0)
         utils.add_face()
+        utils.select_all()
+        utils.normals_consistent_outside()
         utils.to_object_mode()
         utils.offset(context, i)
 

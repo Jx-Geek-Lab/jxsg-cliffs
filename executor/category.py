@@ -1,1 +1,1 @@
-Category = "JXSG.Cliff"
+Category = "JXSG"

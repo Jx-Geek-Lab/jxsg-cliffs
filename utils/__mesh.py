@@ -56,3 +56,12 @@ class Mesh:
                 "constraint_axis":(bool(x), bool(y), bool(z)),
             },
         )
+
+    def normals_flip(self):
+        bpy.ops.mesh.flip_normals()
+
+    def normals_consistent_outside(self):
+        bpy.ops.mesh.normals_make_consistent(inside=False)
+    
+    def normals_consistent_inside(self):
+        bpy.ops.mesh.normals_make_consistent(inside=True)
